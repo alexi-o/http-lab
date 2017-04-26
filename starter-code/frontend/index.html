@@ -10,23 +10,22 @@
 </head>
 
 <!-- ADD ng-app to the body tag -->
-<body>
+<body ng-app="TheCriminalsApp">
 
   <h1>Infamous Criminals</h1>
-
 <!-- ADD ng-controller to the section tag -->
-  <section>
+  <section ng-controller="CriminalsController as criminals">
 
     <!-- FILL IN THE BLANKS! This should show the criminals name, location and status. The span with the status in it should have a class of the status (watch for case sensitivity)-->
     <ul id="criminals">
-      <li ng-repeat="" data-id="">
-        <strong>{{}}</strong> <em>{{}}</em> <span class='status {{}}'>{{}}</span>
-        <button class='delete' ng-click="">X</button>
+      <li ng-repeat="criminal in criminals.all" data-id="">
+        <strong>{{criminal.name}}</strong> <em>{{criminal.location}}</em> <span class='status {{criminal.status}}'>{{criminal.status}}</span>
+        <button class='delete' ng-click="criminals.deleteCriminal(criminal)">X</button>
       </li>
     </ul>
 
 <!-- ADD ng-submit to the form -->
-    <form>
+    <form class="add-criminal" ng-submit="criminals.addCriminal()">
       <div>
         <label for="newCriminal-name">Name:</label>
         <input type="text" id="newCriminal-name" ng-model="criminals.newCriminal.name" placeholder="Prof. Moriarty">
@@ -39,7 +38,7 @@
         <label for="newCriminal-status">Status:</label>
 
 <!-- ADD ng-model to the select tag -->
-        <select id="newCriminal-status">
+        <select id="newCriminal-status" ng-model="criminals.newCriminal.status">
           <option value="" disabled>- - Please Select One - -</option>
           <option value="Alive">Alive</option>
           <option value="Dead">Dead</option>
@@ -50,7 +49,19 @@
         <input type="submit" value="Add Criminal">
       </div>
     </form>
-
+    <form class="update-criminal">
+    <label for="newCriminal-status">Status:</label>
+      <select id="updateCriminal-status">
+        <option value="" disabled>- - Please Select One - -</option>
+        <option value="Alive">Alive</option>
+        <option value="Dead">Dead</option>
+        <option value="Unknown" selected>Unknown</option>
+      </select>
+      <select id ="updateCriminal">
+          <option ng-repeat="criminal in criminals.all"> {{criminal.name}}</option>
+          </select>
+        <input type="submit" value="Update Criminal">
+    
   </section>
 
 </body>
